@@ -29,7 +29,7 @@ sw   x6, 0(x5)       # store x6 into memory at address x5
 ```
 
 ### Instruction_Memory.v
-```asm
+```verilog
 initial begin
     mem[0] = 32'h00F00293; // addi x5, x0, 15
     mem[1] = 32'h00F00313; // addi x6, x0, 15
@@ -38,14 +38,14 @@ end
 ```
 
 ### Data_Memory.v
-```asm
+```verilog
 initial begin
     mem[0] = 32'h0000000F; // optional initial value, will be overwritten by store word(sw)
 end
 ```
 
 ### Register_File.v
-```asm
+```verilog
 integer i;
 initial begin
     for(i=0; i<32; i=i+1)
