@@ -23,8 +23,8 @@ To verify the RISC-V single-cycle core, we ran a simple "Add and Store Word" pro
 
 ### Assembly code
 ```asm
-addi x5, x0, 15      # x5 = 15 → memory address
-addi x6, x0, 15      # x6 = 15 → data to store
+addi x5, x0, 15      # x5 = 15 -> memory address
+addi x6, x0, 15      # x6 = 15 -> data to store
 sw   x6, 0(x5)       # store x6 into memory at address x5
 ```
 
@@ -60,8 +60,8 @@ To verify conditional execution, we ran a simple "Branch Test" program:
 
 ### Assembly code
 ```asm
-addi x5, x0, 5        # x5 = 5 → memory address / comparison value
-addi x6, x0, 5        # x6 = 5 → comparison value
+addi x5, x0, 5        # x5 = 5 -> memory address / comparison value
+addi x6, x0, 5        # x6 = 5 -> comparison value
 beq x5, x6, label     # branch if x5 == x6, skip next instruction
 addi x7, x0, 1        # executed only if branch not taken
 label: addi x7, x0, 99 # executed if branch taken
