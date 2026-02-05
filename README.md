@@ -23,9 +23,9 @@ Detailed description coming soon.
 
 ### Assembly code
 ```asm
-addi x5, x0, 15      # x5 = 15 → endereço em bytes
-addi x6, x0, 15      # x6 = 15 → dado a ser armazenado
-sw   x6, 0(x5)       # escreve o valor de x6 na memória no endereço contido em x5 + offset 0
+addi x5, x0, 15      # x5 = 15 → memory address
+addi x6, x0, 15      # x6 = 15 → data to store
+sw   x6, 0(x5)       # store x6 into memory at address x5
 ```
 
 ### Instruction_Memory.v
@@ -40,7 +40,7 @@ end
 ### Data_Memory.v
 ```asm
 initial begin
-    mem[0] = 32'h0000000F; // valor inicial opcional para teste
+    mem[0] = 32'h0000000F; // optional initial value, will be overwritten by store word(sw)
 end
 ```
 
@@ -49,9 +49,9 @@ end
 integer i;
 initial begin
     for(i=0; i<32; i=i+1)
-        Register[i] = 32'h0;       // inicializa todos os registradores com 0
-    Register[0] = 32'h00000000;    // x0 sempre 0
-    Register[5] = 32'h0000000F;    // inicialização de x5
+        Register[i] = 32'h0;       // initialization with all registers to 0
+    Register[0] = 32'h00000000;    // x0 always 0
+    Register[5] = 32'h0000000F;    // set initial value for x5 (used as memory address)
 end
 ```
 ![Add and Store Word Simulation](https://github.com/LeoIgreja11/RISC-V_Single_Cycle_Core/raw/main/image/ADD_STORE_WORD.png)
