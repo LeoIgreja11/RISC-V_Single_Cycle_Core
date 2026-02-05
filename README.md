@@ -19,7 +19,7 @@ Detailed description coming soon.
 ..soon
 
 ## 6. Verification & Simulation Environment
-.To verify the RISC-V single-cycle core, we ran a simple "Add and Store Word" program:
+To verify the RISC-V single-cycle core, we ran a simple "Add and Store Word" program:
 
 ### Assembly code
 ```asm
