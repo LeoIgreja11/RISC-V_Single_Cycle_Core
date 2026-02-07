@@ -7,13 +7,15 @@
 `include "Data_Memory.v"
 `include "PC_Adder.v"
 `include "Mux.v"
+`include "Branch_Sign.v"
+`include "Branch_Adder.v"
 
 module Single_Cycle_Top (clk,rst);
 
     input clk,rst;
 
-    wire[31:0] PC_Top,RD_Instr,RD1_Top,Imm_Ext_Top,ALUResult,ReadData,PCPlus4,RD2_Top,SrcB,Result;
-    wire RegWrite, MemWrite,ALUSrc,ResultSrc;
+    wire[31:0] PC_Top,RD_Instr,RD1_Top,Imm_Ext_Top,ALUResult,ReadData,PCPlus4,RD2_Top,SrcB,Result,PC_Next,PCBranch;
+    wire RegWrite, MemWrite,ALUSrc,ResultSrc,Branch,PCSrc,Zero;
     wire [1:0] ImmSrc;
     wire [2:0] ALUControl_Top;
 
@@ -21,15 +23,21 @@ module Single_Cycle_Top (clk,rst);
         .clk(clk),
         .rst(rst),
         .PC(PC_Top),
-        .PC_NEXT(PCPlus4)
+        .PC_NEXT(PC_Next)
     );
 
     PC_Adder PC_Adder(
         .a(PC_Top),
         .b(32'd4),
         .c(PCPlus4)
-
     );   
+
+    Mux Mux_PC_Branch(
+        .a(PCPlus4),
+        .b(PCBranch),
+        .s(PCSrc), 
+        .c(PC_Next)
+    );
 
     Instruction_Memory Instruction_Memory(
         .rst(rst),
@@ -51,7 +59,7 @@ module Single_Cycle_Top (clk,rst);
    
     Sign_Extend Sign_Extend(
         .In(RD_Instr),
-        .ImmSrc(ImmSrc[0]),
+        .ImmSrc(ImmSrc),
         .Imm_Ext(Imm_Ext_Top)
     );
 
@@ -67,7 +75,7 @@ module Single_Cycle_Top (clk,rst);
         .B(SrcB),
         .Result(ALUResult),
         .ALUControl(ALUControl_Top),
-        .Zero(),
+        .Zero(Zero),
         .Carry(),
         .Negative(),
         .OverFlow()
@@ -80,11 +88,10 @@ module Single_Cycle_Top (clk,rst);
         .ALUSrc(ALUSrc),
         .MemWrite(MemWrite),
         .ResultSrc(ResultSrc),
-        .Branch(),
+        .Branch(Branch),
         .funct3(RD_Instr[14:12]),
-        .funct7(),
+        .funct7(RD_Instr[31:25]),
         .ALUControl(ALUControl_Top)
-
     );
 
     Data_Memory Data_Memory(
@@ -102,5 +109,19 @@ module Single_Cycle_Top (clk,rst);
         .s(ResultSrc),
         .c(Result)
     );
-    
+
+    Branch_Sign Branch_Sign(
+        .Branch(Branch),
+        .Zero(Zero),
+        .PCSrc(PCSrc)
+    );
+
+   Branch_Adder Branch_Adder(
+        .PC_Top(PC_Top),
+        .SignImm({Imm_Ext_Top[30:0],1'b0}),
+        .PCBranch(PCBranch)
+    );
+
+ 
+
 endmodule

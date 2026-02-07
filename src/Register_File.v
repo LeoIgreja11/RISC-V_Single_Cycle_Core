@@ -14,14 +14,18 @@ assign RD2 = (~rst) ? 32'd0 : Register[A2];
 
 always @(posedge clk) 
 begin
-    if(WE3)
+    if((WE3) && (A3 != 0)) //x0 = 0 always!!!
         Register[A3] <= WD3;
 end
 
+integer i;
+
 initial begin
-    Register[5] = 32'h00000006;
-    Register[6] = 32'h0000000A;
-    
+    for(i=0;i<32;i=i+1)
+        Register[i] = 32'h0;
+    Register[6] = 32'h00000020;
+
+
 end
 
 endmodule

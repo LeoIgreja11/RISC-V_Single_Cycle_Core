@@ -11,17 +11,20 @@ module Control_Unit_Top(Op,RegWrite,ImmSrc,ALUSrc,MemWrite,ResultSrc,Branch,func
 
     wire [1:0]ALUOp;
 
-    Main_Decoder Main_Decoder(
+    //module instatiation
+    //main decoder with control signals: Branch,ResultSrc,MemWrite,ALUSrc,RegWrite
+    Main_Decoder Main_Decoder(  
         .Op(Op),
         .RegWrite(RegWrite),
         .ImmSrc(ImmSrc),
         .MemWrite(MemWrite),
-        .ResultSrc(ResultSrc),
+        .ResultSrc(ResultSrc), //MemtoReg
         .Branch(Branch),
         .ALUSrc(ALUSrc),
         .ALUOp(ALUOp)
     ); 
 
+    //ALU decoder with control signals: ALUControl
     ALU_Decoder ALU_Decoder(
         .ALUOp(ALUOp),
         .funct3(funct3),

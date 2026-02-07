@@ -1,12 +1,12 @@
 module ALU(A,B,ALUControl,Result,Zero,Negative,OverFlow,Carry);
     
-    input [31:0]A,B;
-    input [2:0] ALUControl;
-    output Carry,OverFlow,Zero,Negative;
-    output [31:0] Result;
+    input [31:0]A,B; //input variable
+    input [2:0] ALUControl; //control variable
+    output Carry,OverFlow,Zero,Negative; //flags
+    output [31:0] Result; //output variable
 
     //auxiliar variable
-    wire Cout;
+    wire Cout; 
     wire [31:0]Sum;
 
     assign Sum = (ALUControl[0] == 1'b0) ? A + B : (A + (~B)+1); // define wich operation arithmetich type be realized (add or sub)
