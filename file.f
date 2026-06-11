@@ -4,10 +4,8 @@
 // Author: Leonardo Igreja Bezerra
 // 05/21/2026
 ////////////////////////////////////////////////////////////////////////////////
-rtl/ALU_Decoder.sv
-rtl/Main_Decoder.sv
-rtl/Branch_Adder.sv
-rtl/Branch_Sign.sv
+rtl/Clock_Gating.sv
+rtl/Reset_Sync.sv
 rtl/Data_Memory.sv
 rtl/Instruction_Memory.sv
 rtl/Mux.sv
